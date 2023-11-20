@@ -11,13 +11,16 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private float speed = 5f;
 
-    public int score = 3;
+
+    [SerializeField]
+    private Animator animator;
 
 
     // Start is called before the first frame update
     void Start()
     {
-       rGB = GetComponent<Rigidbody2D>();
+        rGB = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -25,6 +28,14 @@ public class PlayerMove : MonoBehaviour
     {
         direction.x = Input.GetAxis("Horizontal");
         direction.y = Input.GetAxis("Vertical");
+
+        if (Input.GetButtonDown("Fire3"))
+        {
+            Debug.Log("Hit");
+            animator.SetBool("Hit", true);
+        }
+       
+
     }
 
 
