@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fcc64f61d43cb04bae352dd892144eb, type: 3}
   m_Name: EnnemiToBeat
   m_EditorClassIdentifier: 
-  pointVie: 5
-  scoreJoueur: 30
+  pointVie: 0
+  scoreJoueur: 0

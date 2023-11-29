@@ -35,13 +35,12 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("Hit", true);
         }
        
-
     }
-
 
     private void FixedUpdate()
     {
         rGB.MovePosition(rGB.position + direction * speed * Time.fixedDeltaTime) ;
+        
     }
 
 
