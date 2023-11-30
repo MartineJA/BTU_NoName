@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShadowMovements : MonoBehaviour
 
@@ -9,18 +10,28 @@ public class ShadowMovements : MonoBehaviour
 {
 
     #region public
+    public Transform _graphics;
 
     [SerializeField]
-    private float _movespeed = 10f;
-    [SerializeField]
-    private float _jumpForce = 200f;
+    AnimationCurve _jumpCurve;
 
+    [SerializeField]
+    float _jumpHeight = 3f;
+
+
+    public float _speed = 1.5f;
+    public Vector2 _direction;
     #endregion
+
+
+
 
     void Awake()
     {
         _rgbd = GetComponent<Rigidbody2D>();
-        
+
+        _graphics = transform.Find("Shadow");
+
     }
     void Start() 
     {
@@ -28,34 +39,60 @@ public class ShadowMovements : MonoBehaviour
     //Touche assignée pour le déplacement et le Saut 
     void Update()
     {
-        _direction.x = Input.GetAxisRaw("Horizontal") * _movespeed;
+        _direction.x = Input.GetAxisRaw("Horizontal") * _speed;
 
-        if (Input.GetButtonDown("Jump") )
+        _direction.y = Input.GetAxisRaw("Vertical") * _speed;
+
+
+        if (_jumpTimer < 1f)
         {
-            _isJumping = true;
+            _jumpTimer += Time.deltaTime;
+
+            float y = _jumpCurve.Evaluate(_jumpTimer);
+
+            _graphics.localPosition = new Vector3(transform.localPosition.x, y * _jumpHeight, transform.localPosition.z);
+
         }
+
+        else
+
+        {
+            _jumpTimer = 0f;
+
+        }
+
     }
-      
     void FixedUpdate()
     {
-        _direction.y = _rgbd.velocity.y;
-
-        if (_isJumping)
-        {
-            _direction.y = _jumpForce * Time.fixedDeltaTime;
-
-            _isJumping = false;
-        }
-        _rgbd.velocity = _direction;
+        
+        _rgbd.MovePosition(_rgbd.position + _direction * _movespeed * Time.fixedDeltaTime);
+        
     }
-    
+      
+        
     #region private
-    private Vector2 _direction;
     private Rigidbody2D _rgbd;
-    private bool _isJumping = false;
+    private float _movespeed = 5f;
+    float _jumpTimer;
     #endregion
 
+    
+    
+
 }
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
     
          

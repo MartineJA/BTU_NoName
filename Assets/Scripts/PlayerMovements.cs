@@ -6,21 +6,25 @@ using UnityEngine;
 public class PlayerMovements : MonoBehaviour
 {
 
-      
+
     #region public
-    [SerializeField]
-    private float _movespeed = 10f;
+    public Transform _graphics;
 
     [SerializeField]
-    private float _jumpForce = 200f;
+    AnimationCurve _jumpCurve;
+
+    [SerializeField]
+    float _jumpHeight = 3f;
+
+    public float _speed = 1.5f;
+    public Vector2 _direction;
     #endregion
-
-
 
     void Awake()
     {
         _rgbd = GetComponent<Rigidbody2D>();
-        
+
+        _graphics = transform.Find("Character 1");
     }
     void Start() 
     {
@@ -28,35 +32,88 @@ public class PlayerMovements : MonoBehaviour
     //Touche assignée pour le déplacement et le Saut 
     void Update()
     {
-        _direction.x = Input.GetAxisRaw("Horizontal") * _movespeed;
+        Vector2 _direction;
 
-        if (Input.GetButtonDown("Jump") )
+        _direction.x = Input.GetAxisRaw("Horizontal") * _speed;
+
+
+        _direction.y = Input.GetAxisRaw("Vertical") * _speed;
+
+
+
+        if (_jumpTimer < 1f)
         {
-            _isJumping = true;
+            _jumpTimer += Time.deltaTime;
+
+            float y = _jumpCurve.Evaluate(_jumpTimer);
+
+            _graphics.localPosition = new Vector3(transform.localPosition.x, y * _jumpHeight, transform.localPosition.z);
+
         }
+        else
+        {
+            _jumpTimer = 0f;
+        }
+       
+
+
+
+
     }
       
     //Opérateurs Pour Le Saut
     void FixedUpdate()
     {
-        _direction.y = _rgbd.velocity.y;
+        
+        Debug.Log(_direction.y);
 
-        if (_isJumping)
-        {
-            _direction.y = _jumpForce * Time.fixedDeltaTime;
 
-            _isJumping = false;
-        }
-        _rgbd.velocity = _direction;
+                
+        _rgbd.MovePosition(_rgbd.position + _direction * _movespeed * Time.fixedDeltaTime);            
+         
     }
-    
-    #region private
-    private Vector2 _direction;
-    private Rigidbody2D _rgbd;
-    private bool _isJumping = false;
-    #endregion
+  
 
+    #region private
+    private Rigidbody2D _rgbd;
+    private float _movespeed = 5f;
+    float _jumpTimer;
+    #endregion
+  
+    
 }
+   
+    
+    
+
+    
+
+
+
+
+
+
+      
+
+        
+    
+
+
+
+
+
+
+
+
+
+       
+
+    
+           
+        
+
+      
+
 
     
          
