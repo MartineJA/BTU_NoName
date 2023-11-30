@@ -19,8 +19,9 @@ public class ShadowMovements : MonoBehaviour
     float _jumpHeight = 3f;
 
 
-    public float _speed = 1.5f;
+    public float _speed = 0.5f;
     public Vector2 _direction;
+    
     #endregion
 
 
@@ -66,7 +67,9 @@ public class ShadowMovements : MonoBehaviour
     {
         
         _rgbd.MovePosition(_rgbd.position + _direction * _movespeed * Time.fixedDeltaTime);
+
         
+
     }
       
         

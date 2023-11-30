@@ -360,7 +360,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _jumpHeight: 3
-  _speed: 1.5
+  _speed: 0.5
   _direction: {x: 0, y: 0}
 --- !u!50 &31998329
 Rigidbody2D:
@@ -629,8 +629,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _jumpHeight: 3
-  _speed: 1.5
+  _speed: 0.5
   _direction: {x: 0, y: 0}
+  _animator: {fileID: 422841970}
 --- !u!61 &422841974
 BoxCollider2D:
   m_ObjectHideFlags: 0

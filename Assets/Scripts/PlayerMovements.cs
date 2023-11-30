@@ -18,6 +18,7 @@ public class PlayerMovements : MonoBehaviour
 
     public float _speed = 1.5f;
     public Vector2 _direction;
+    public Animator _animator; 
     #endregion
 
     void Awake()
@@ -32,7 +33,6 @@ public class PlayerMovements : MonoBehaviour
     //Touche assignée pour le déplacement et le Saut 
     void Update()
     {
-        Vector2 _direction;
 
         _direction.x = Input.GetAxisRaw("Horizontal") * _speed;
 
@@ -65,8 +65,9 @@ public class PlayerMovements : MonoBehaviour
     void FixedUpdate()
     {
         
-        Debug.Log(_direction.y);
+        Debug.Log(_direction.magnitude);
 
+        _animator.SetFloat("Walkspeed", _direction.magnitude);
 
                 
         _rgbd.MovePosition(_rgbd.position + _direction * _movespeed * Time.fixedDeltaTime);            
