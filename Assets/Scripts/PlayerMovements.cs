@@ -25,6 +25,8 @@ public class PlayerMovements : MonoBehaviour
     {
         _rgbd = GetComponent<Rigidbody2D>();
 
+        
+
         _graphics = transform.Find("Character 1");
     }
     void Start() 
@@ -36,11 +38,9 @@ public class PlayerMovements : MonoBehaviour
 
         _direction.x = Input.GetAxisRaw("Horizontal") * _speed;
 
-
         _direction.y = Input.GetAxisRaw("Vertical") * _speed;
 
-
-
+        
         if (_jumpTimer < 1f)
         {
             _jumpTimer += Time.deltaTime;
@@ -54,13 +54,14 @@ public class PlayerMovements : MonoBehaviour
         {
             _jumpTimer = 0f;
         }
-       
-
-
-
-
+        if (Input.GetButtonDown("Sprint"))
+        {
+            _animator.SetBool("Sprint", true);
+            Debug.Log("Sprint true"); 
+        }
+            
     }
-      
+          
     //Opérateurs Pour Le Saut
     void FixedUpdate()
     {
@@ -69,20 +70,48 @@ public class PlayerMovements : MonoBehaviour
 
         _animator.SetFloat("Walkspeed", _direction.magnitude);
 
-                
+        if(Input.GetButtonUp("Sprint"))
+        {
+
+            _animator.SetBool("Sprint", false);
+            Debug.Log("Sprint false");
+
+        }
+       
+
         _rgbd.MovePosition(_rgbd.position + _direction * _movespeed * Time.fixedDeltaTime);            
-         
+
     }
-  
 
     #region private
     private Rigidbody2D _rgbd;
-    private float _movespeed = 5f;
+    private float _movespeed = 1f;
     float _jumpTimer;
+   
     #endregion
+  
+                
+         
   
     
 }
+        
+
+
+
+
+
+            
+
+
+
+
+       
+
+
+
+
+      
    
     
     

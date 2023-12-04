@@ -75,7 +75,7 @@ public class ShadowMovements : MonoBehaviour
         
     #region private
     private Rigidbody2D _rgbd;
-    private float _movespeed = 5f;
+    private float _movespeed = 1f;
     float _jumpTimer;
     #endregion
 
